@@ -11,17 +11,7 @@ import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
  */
 
 @TeleOp(name="ArcadeDrive")
-public class ArcadeOpMode extends OpMode {
-    DcMotor leftDrive;
-    DcMotor rightDrive;
-
-    @Override
-    public void init() {
-        leftDrive = hardwareMap.get(DcMotor.class,"leftDrive");
-        rightDrive = hardwareMap.get(DcMotor.class,"rightDrive");
-        rightDrive.setDirection(REVERSE);
-    }
-
+public class ArcadeOpMode extends RoboCubsOpMode {
     @Override
     public void loop() {
         //Positive is forward

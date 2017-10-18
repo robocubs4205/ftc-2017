@@ -8,16 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.*;
 
 @TeleOp(name="Teleop")
-public class TeleOpOpMode extends OpMode{
-    DcMotor leftDrive;
-    DcMotor rightDrive;
-
-    @Override
-    public void init() {
-        leftDrive = hardwareMap.get(DcMotor.class,"leftDrive");
-        rightDrive = hardwareMap.get(DcMotor.class,"rightDrive");
-        rightDrive.setDirection(REVERSE);
-    }
+public class TeleOpOpMode extends RoboCubsOpMode{
 
     @Override
     public void loop() {
