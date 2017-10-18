@@ -5,13 +5,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
 
-/**
- * Created by Developer on 10/17/2017.
- */
-
-public abstract class RoboCubsOpMode extends OpMode {
-    DcMotor leftDrive;
-    DcMotor rightDrive;
+abstract class RoboCubsOpMode extends OpMode {
+    protected DcMotor leftDrive;
+    protected DcMotor rightDrive;
 
     @Override
     public void init() {
