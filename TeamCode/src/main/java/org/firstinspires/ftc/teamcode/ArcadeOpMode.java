@@ -10,7 +10,7 @@ import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
  * Created by Developer on 10/17/2017.
  */
 
-@TeleOp(name="ArcadeDrive")
+@TeleOp(name="TeleOp")
 public class ArcadeOpMode extends RoboCubsOpMode {
     @Override
     public void loop() {
