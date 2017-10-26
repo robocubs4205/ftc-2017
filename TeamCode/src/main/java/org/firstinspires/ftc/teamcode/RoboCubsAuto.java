@@ -1,16 +1,16 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gyroscope;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
-import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
+/**
+ * Created by Developer on 10/25/2017.
+ */
 
-@SuppressWarnings("WeakerAccess")
-abstract class RoboCubsOpMode extends OpMode {
-
+public abstract class RoboCubsAuto extends LinearOpMode{
     RoboCubsOpModeBase base = new RoboCubsOpModeBase();
 
     protected DcMotor leftDrive;
@@ -23,10 +23,8 @@ abstract class RoboCubsOpMode extends OpMode {
     protected Gyroscope gyro;
     protected DcMotor armLift;
 
-
-
     @Override
-    public void init() {
+    public void runOpMode() throws InterruptedException {
         base.init(hardwareMap);
         leftDrive = base.leftDrive;
         rightDrive = base.rightDrive;
@@ -37,5 +35,6 @@ abstract class RoboCubsOpMode extends OpMode {
         liftLowerLimit = base.liftLowerLimit;
         gyro = base.gyro;
         armLift = base.armLift;
+
     }
 }
