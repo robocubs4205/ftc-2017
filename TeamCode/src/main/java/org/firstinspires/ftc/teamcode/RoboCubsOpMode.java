@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
 
+@SuppressWarnings("WeakerAccess")
 abstract class RoboCubsOpMode extends OpMode {
     protected DcMotor leftDrive;
     protected DcMotor rightDrive;
@@ -17,6 +18,7 @@ abstract class RoboCubsOpMode extends OpMode {
     protected Servo hooker;
     protected TouchSensor liftLowerLimit;
     protected Gyroscope gyro;
+
 
 
     @Override

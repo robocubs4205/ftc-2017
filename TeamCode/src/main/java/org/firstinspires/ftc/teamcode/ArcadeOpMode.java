@@ -1,20 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
-import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
-
-/**
- * Created by Developer on 10/17/2017.
- */
-
+@SuppressWarnings("FieldCanBeLocal")
 @TeleOp(name="TeleOp")
 public class ArcadeOpMode extends RoboCubsOpMode {
-    final double drivePowerScale = 0.8;
-    final double liftPowerScale = 1;
-    final double armPowerScale = 1.0;
+    private final double drivePowerScale = 0.8;
+    private final double liftPowerScale = 1;
+    private final double armPowerScale = 1.0;
 
     @Override
     public void loop() {
@@ -59,7 +52,7 @@ public class ArcadeOpMode extends RoboCubsOpMode {
         else if (gamepad2.right_trigger > 0.5) {
             hookerPosition = -1;
         }
-        
+
         hooker.setPosition(hookerPosition);
     }
 
