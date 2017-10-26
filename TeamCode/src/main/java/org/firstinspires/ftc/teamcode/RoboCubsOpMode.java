@@ -14,10 +14,11 @@ abstract class RoboCubsOpMode extends OpMode {
     protected DcMotor rightDrive;
     protected DcMotor liftMotor;
     protected Servo glyphClamp;
-    protected DcMotor armMotor;
+    protected DcMotor armExtend;
     protected Servo hooker;
     protected TouchSensor liftLowerLimit;
     protected Gyroscope gyro;
+    protected DcMotor armLift;
 
 
 
@@ -29,12 +30,12 @@ abstract class RoboCubsOpMode extends OpMode {
         liftMotor = hardwareMap.get(DcMotor.class, "liftMotor");
         liftMotor.setDirection(REVERSE);
         glyphClamp = hardwareMap.get(Servo.class, "glyphMotor");
-        armMotor = hardwareMap.get(DcMotor.class, "armMotor");
+        armExtend = hardwareMap.get(DcMotor.class, "armExtend");
         hooker = hardwareMap.get(Servo.class, "hooker");
         hooker.scaleRange(-0.5,1.0);
         liftLowerLimit = hardwareMap.get(TouchSensor.class, "liftLowerLimit");
         gyro = hardwareMap.get(Gyroscope.class, "gyro");
-
-
+        armLift = hardwareMap.get(DcMotor.class, "armLift");
+        armLift.setDirection(REVERSE);
     }
 }

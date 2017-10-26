@@ -7,7 +7,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class ArcadeOpMode extends RoboCubsOpMode {
     private final double drivePowerScale = 0.8;
     private final double liftPowerScale = 1;
-    private final double armPowerScale = 1.0;
+    private final double armExtendPowerScale = 1.0;
+    private final double armLiftPowerScale = 1.0;
 
     @Override
     public void loop() {
@@ -32,8 +33,8 @@ public class ArcadeOpMode extends RoboCubsOpMode {
         }
         liftMotor.setPower(liftMotorPower * liftPowerScale);
 
-        double armMotorPower = gamepad2.right_stick_y;
-        armMotor.setPower(armMotorPower * armPowerScale);
+        double armExtendPower = gamepad2.right_stick_y;
+        armExtend.setPower(armExtendPower * armExtendPowerScale);
         //Negative is open
         double glyphClampPosition = glyphClamp.getPosition();
         if (gamepad2.y){
@@ -54,6 +55,9 @@ public class ArcadeOpMode extends RoboCubsOpMode {
         }
 
         hooker.setPosition(hookerPosition);
+
+        double armLiftPower = gamepad2.left_stick_y;
+        armLift.setPower(armLiftPower * armLiftPowerScale);
     }
 
 
