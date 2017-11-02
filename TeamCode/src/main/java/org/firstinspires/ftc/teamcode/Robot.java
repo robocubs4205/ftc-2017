@@ -8,21 +8,17 @@ import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
 
-/**
- * Created by Developer on 10/25/2017.
- */
 
-@SuppressWarnings("WeakerAccess")
-public class RoboCubsOpModeBase {
-    protected DcMotor leftDrive;
-    protected DcMotor rightDrive;
-    protected DcMotor liftMotor;
-    protected Servo glyphClamp;
-    protected DcMotor armExtend;
-    protected Servo hooker;
-    protected TouchSensor liftLowerLimit;
-    protected Gyroscope gyro;
-    protected DcMotor armLift;
+public class Robot {
+    DcMotor leftDrive;
+    DcMotor rightDrive;
+    DcMotor liftMotor;
+    Servo glyphClamp;
+    DcMotor armExtend;
+    Servo hooker;
+    TouchSensor liftLowerLimit;
+    Gyroscope gyro;
+    DcMotor armLift;
 
     public void init(HardwareMap hardwareMap) {
         leftDrive = hardwareMap.get(DcMotor.class,"leftDrive");
