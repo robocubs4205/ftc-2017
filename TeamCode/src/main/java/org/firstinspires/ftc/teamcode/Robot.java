@@ -20,7 +20,7 @@ public class Robot {
     Gyroscope gyro;
     DcMotor armLift;
 
-    public void init(HardwareMap hardwareMap) {
+    void init(HardwareMap hardwareMap) {
         leftDrive = hardwareMap.get(DcMotor.class,"leftDrive");
         rightDrive = hardwareMap.get(DcMotor.class,"rightDrive");
         rightDrive.setDirection(REVERSE);
@@ -34,5 +34,16 @@ public class Robot {
         gyro = hardwareMap.get(Gyroscope.class, "gyro");
         armLift = hardwareMap.get(DcMotor.class, "armLift");
         armLift.setDirection(REVERSE);
+    }
+
+    //Distance is in feet, returns time in seconds
+    double timeForDistance(double distance, double power) {
+        final double rpm = 152;
+        final double wheelDiameter = 4.25; //Inches
+        final double wheelCircumference = wheelDiameter * Math.PI; //Inches
+        final double rate = wheelCircumference * rpm; //Inches per minute
+        final double feetPerSecond = rate / 12 / 60;
+        final double secondsPerFoot = 1 / feetPerSecond;
+        return secondsPerFoot * distance / Math.abs(power);
     }
 }
