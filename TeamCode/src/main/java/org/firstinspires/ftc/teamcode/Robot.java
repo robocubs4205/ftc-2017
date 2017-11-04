@@ -55,10 +55,10 @@ public class Robot {
         final double angleForMaxPower = 45;
 
         double currentAngle = gyro.getHeading();
-        if (heading - currentAngle > 180) {
+        while (heading - currentAngle > 180) {
             heading -= 360;
         }
-        if (currentAngle - heading > 180) {
+        while (currentAngle - heading > 180) {
             heading += 360;
         }
 
