@@ -14,6 +14,6 @@ public class MoveForwardAuto extends LinearOpMode {
         waitForStart();
         robot.leftDrive.setPower(drivePower);
         robot.rightDrive.setPower(drivePower);
-        sleep((long) (robot.timeForDistance(2, drivePower) * 1000));
+        sleep((long) (Robot.timeForDistance(2, drivePower) * 1000));
     }
 }

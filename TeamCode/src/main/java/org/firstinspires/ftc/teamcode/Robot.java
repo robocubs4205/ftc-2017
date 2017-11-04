@@ -1,12 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Gyroscope;
+import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
+import static java.lang.Thread.sleep;
 
 
 public class Robot {
@@ -17,12 +18,12 @@ public class Robot {
     DcMotor armExtend;
     Servo hooker;
     TouchSensor liftLowerLimit;
-    Gyroscope gyro;
+    GyroSensor gyro;
     DcMotor armLift;
 
     void init(HardwareMap hardwareMap) {
-        leftDrive = hardwareMap.get(DcMotor.class,"leftDrive");
-        rightDrive = hardwareMap.get(DcMotor.class,"rightDrive");
+        leftDrive = hardwareMap.get(DcMotor.class, "leftDrive");
+        rightDrive = hardwareMap.get(DcMotor.class, "rightDrive");
         rightDrive.setDirection(REVERSE);
         liftMotor = hardwareMap.get(DcMotor.class, "liftMotor");
         liftMotor.setDirection(REVERSE);
@@ -33,13 +34,13 @@ public class Robot {
         hooker.setPosition(0.5);
 //        hooker.scaleRange(0,1.0);
         liftLowerLimit = hardwareMap.get(TouchSensor.class, "liftLowerLimit");
-        gyro = hardwareMap.get(Gyroscope.class, "gyro");
+        gyro = hardwareMap.get(GyroSensor.class, "gyro");
         armLift = hardwareMap.get(DcMotor.class, "armLift");
         armLift.setDirection(REVERSE);
     }
 
     //Distance is in feet, returns time in seconds
-    double timeForDistance(double distance, double power) {
+    static double timeForDistance(double distance, double power) {
         final double rpm = 152;
         final double wheelDiameter = 4.25; //Inches
         final double wheelCircumference = wheelDiameter * Math.PI; //Inches
@@ -47,5 +48,33 @@ public class Robot {
         final double feetPerSecond = rate / 12 / 60;
         final double secondsPerFoot = 1 / feetPerSecond;
         return secondsPerFoot * distance / Math.abs(power);
+    }
+
+    void turnToHeading(double heading) throws InterruptedException {
+        final double maxTurnPower = 0.5;
+        final double angleForMaxPower = 45;
+
+        double currentAngle = gyro.getHeading();
+        if (heading - currentAngle > 180) {
+            heading -= 360;
+        }
+        if (currentAngle - heading > 180) {
+            heading += 360;
+        }
+
+
+        while (Math.abs(heading - currentAngle) > 5) {
+            double turnPower = clampMagnitude((heading - currentAngle) * maxTurnPower / angleForMaxPower, maxTurnPower);
+            leftDrive.setPower(turnPower);
+            rightDrive.setPower(-turnPower);
+            sleep(20L);
+            currentAngle = gyro.getHeading();
+        }
+        leftDrive.setPower(0);
+        rightDrive.setPower(0);
+    }
+
+    private static double clampMagnitude(double value, double maxMagnitude) {
+        return Math.max(Math.min(value, maxMagnitude), -maxMagnitude);
     }
 }
