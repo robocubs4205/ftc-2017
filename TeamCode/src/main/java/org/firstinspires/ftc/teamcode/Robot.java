@@ -27,9 +27,11 @@ public class Robot {
         liftMotor = hardwareMap.get(DcMotor.class, "liftMotor");
         liftMotor.setDirection(REVERSE);
         glyphClamp = hardwareMap.get(Servo.class, "glyphMotor");
+        glyphClamp.setPosition(0.5);
         armExtend = hardwareMap.get(DcMotor.class, "armExtend");
         hooker = hardwareMap.get(Servo.class, "hooker");
-        hooker.scaleRange(-0.5,1.0);
+        hooker.setPosition(0.5);
+//        hooker.scaleRange(0,1.0);
         liftLowerLimit = hardwareMap.get(TouchSensor.class, "liftLowerLimit");
         gyro = hardwareMap.get(Gyroscope.class, "gyro");
         armLift = hardwareMap.get(DcMotor.class, "armLift");
