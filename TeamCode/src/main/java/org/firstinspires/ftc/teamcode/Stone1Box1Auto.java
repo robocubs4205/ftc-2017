@@ -26,5 +26,11 @@ public class Stone1Box1Auto extends LinearOpMode {
         sleep((long) (Robot.timeForDistance(4, drivePower) * 1000));
         robot.leftDrive.setPower(0);
         robot.rightDrive.setPower(0);
+        robot.glyphClamp.setPosition(0);
+        robot.leftDrive.setPower(-drivePower);
+        robot.rightDrive.setPower(-drivePower);
+        sleep((long) (Robot.timeForDistance(1, drivePower) * 1000));
+        robot.leftDrive.setPower(0);
+        robot.leftDrive.setPower(0);
     }
 }
