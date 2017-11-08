@@ -32,7 +32,7 @@ public class Robot {
         armExtend = hardwareMap.get(DcMotor.class, "armExtend");
         hooker = hardwareMap.get(Servo.class, "hooker");
         hooker.setPosition(0.5);
-//        hooker.scaleRange(0,1.0);
+        hooker.scaleRange(.5,1);
         liftLowerLimit = hardwareMap.get(TouchSensor.class, "liftLowerLimit");
         gyro = hardwareMap.get(GyroSensor.class, "gyro");
         armLift = hardwareMap.get(DcMotor.class, "armLift");
@@ -53,6 +53,8 @@ public class Robot {
     void turnToHeading(double heading) throws InterruptedException {
         final double maxTurnPower = 0.5;
         final double angleForMaxPower = 45;
+        leftDrive.setPower(0);
+        rightDrive.setPower(0);
 
         double currentAngle = gyro.getHeading();
         while (heading - currentAngle > 180) {
