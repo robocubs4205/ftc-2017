@@ -25,11 +25,8 @@ public class ArcadeOpMode extends OpMode {
         //Right Positive Power
         double rightForwardPower = gamepad1.right_stick_y;
 
-        double leftPower = leftForwardPower;
-        double rightPower = rightForwardPower;
-
-        robot.leftDrive.setPower(leftPower * drivePowerScale);
-        robot.rightDrive.setPower(rightPower * drivePowerScale);
+        robot.leftDrive.setPower(leftForwardPower * drivePowerScale);
+        robot.rightDrive.setPower(rightForwardPower * drivePowerScale);
 
         double liftMotorPower = 0;
         if (gamepad2.b){
@@ -57,7 +54,7 @@ public class ArcadeOpMode extends OpMode {
         }
         robot.glyphClamp.setPosition(glyphClampPosition);
 
-        //Positive is up
+        //Positive is closed
         double hookerPosition = robot.hooker.getPosition();
         if(gamepad2.right_bumper) {
             hookerPosition += 0.01;
