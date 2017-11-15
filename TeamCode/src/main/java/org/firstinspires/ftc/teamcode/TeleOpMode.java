@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 @TeleOp(name="TeleOp")
 public class TeleOpMode extends OpMode {
     private Robot robot = new Robot();
-    
+
     private final double liftPowerScale = 1;
     private final double armExtendPowerScale = 0.6;
     private final double armLiftPowerScale = 1.0;
@@ -15,6 +15,7 @@ public class TeleOpMode extends OpMode {
     @Override
     public void init() {
         robot.init(hardwareMap);
+        robot.jewelSensor.enableLed(true);
     }
 
     @Override

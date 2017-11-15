@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -20,6 +21,8 @@ public class Robot {
     TouchSensor liftLowerLimit;
     GyroSensor gyro;
     DcMotor armLift;
+    ColorSensor jewelSensor;
+    Servo jeweler;
 
     void init(HardwareMap hardwareMap) {
         leftDrive = hardwareMap.get(DcMotor.class, "leftDrive");
@@ -37,6 +40,8 @@ public class Robot {
         gyro = hardwareMap.get(GyroSensor.class, "gyro");
         armLift = hardwareMap.get(DcMotor.class, "armLift");
         armLift.setDirection(REVERSE);
+        jewelSensor = hardwareMap.get(ColorSensor.class, "jewelSensor");
+        jeweler = hardwareMap.get(Servo.class, "jeweler");
     }
 
     //Distance is in feet, returns time in seconds
