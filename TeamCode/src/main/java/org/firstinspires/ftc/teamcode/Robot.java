@@ -79,4 +79,10 @@ public class Robot {
     private static double clampMagnitude(double value, double maxMagnitude) {
         return Math.max(Math.min(value, maxMagnitude), -maxMagnitude);
     }
+
+    static double motorPowerCurve(double input) {
+        final double power = 2;
+        final double max = 0.6;
+        return Math.signum(input) * Math.pow(Math.abs(input), power) * max;
+    }
 }

@@ -5,10 +5,9 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @SuppressWarnings("FieldCanBeLocal")
 @TeleOp(name="TeleOp")
-public class ArcadeOpMode extends OpMode {
+public class TeleOpMode extends OpMode {
     private Robot robot = new Robot();
-
-    private final double drivePowerScale = 0.8;
+    
     private final double liftPowerScale = 1;
     private final double armExtendPowerScale = 0.6;
     private final double armLiftPowerScale = 1.0;
@@ -20,13 +19,8 @@ public class ArcadeOpMode extends OpMode {
 
     @Override
     public void loop() {
-        //Left Positive Power
-        double leftForwardPower = gamepad1.left_stick_y;
-        //Right Positive Power
-        double rightForwardPower = gamepad1.right_stick_y;
-
-        robot.leftDrive.setPower(leftForwardPower * drivePowerScale);
-        robot.rightDrive.setPower(rightForwardPower * drivePowerScale);
+        robot.leftDrive.setPower(Robot.motorPowerCurve(gamepad1.left_stick_y));
+        robot.rightDrive.setPower(Robot.motorPowerCurve(gamepad1.right_stick_y));
 
         double liftMotorPower = 0;
         if (gamepad2.b){
