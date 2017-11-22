@@ -12,15 +12,20 @@ import static java.lang.Thread.sleep;
 
 
 public class Robot {
+    Arm arm;
+    Hooker hooker;
+    Glypher glypher;
+    Drive drive;
+
     DcMotor leftDrive;
     DcMotor rightDrive;
     DcMotor liftMotor;
     Servo glyphClamp;
-    DcMotor armExtend;
-    Servo hooker;
+    private DcMotor armExtend;
+    Servo hookerMotor;
     TouchSensor liftLowerLimit;
     GyroSensor gyro;
-    DcMotor armLift;
+    private DcMotor armLift;
     ColorSensor jewelSensor;
     Servo jeweler;
 
@@ -33,15 +38,20 @@ public class Robot {
         glyphClamp = hardwareMap.get(Servo.class, "glyphMotor");
         glyphClamp.setPosition(0.5);
         armExtend = hardwareMap.get(DcMotor.class, "armExtend");
-        hooker = hardwareMap.get(Servo.class, "hooker");
-        hooker.setPosition(0.5);
-        hooker.scaleRange(.5,1);
+        hookerMotor = hardwareMap.get(Servo.class, "hookerMotor");
+        hookerMotor.setPosition(0.5);
+        hookerMotor.scaleRange(.5,1);
         liftLowerLimit = hardwareMap.get(TouchSensor.class, "liftLowerLimit");
         gyro = hardwareMap.get(GyroSensor.class, "gyro");
         armLift = hardwareMap.get(DcMotor.class, "armLift");
         armLift.setDirection(REVERSE);
         jewelSensor = hardwareMap.get(ColorSensor.class, "jewelSensor");
         jeweler = hardwareMap.get(Servo.class, "jeweler");
+
+        arm = new Arm (armExtend, armLift);
+        hooker = new Hooker(hookerMotor);
+        glypher = new Glypher(glyphClamp, liftMotor, liftLowerLimit);
+        drive = new Drive(leftDrive,rightDrive);
     }
 
     //Distance is in feet, returns time in seconds
