@@ -21,6 +21,7 @@ public class Robot {
     DcMotor rightDrive;
     DcMotor liftMotor;
     Servo glyphClamp;
+    Servo glyphClamp2;
     private DcMotor armExtend;
     Servo hookerMotor;
     TouchSensor liftLowerLimit;
@@ -28,6 +29,7 @@ public class Robot {
     private DcMotor armLift;
     ColorSensor jewelSensor;
     Servo jeweler;
+    Servo jewelSwivel;
 
     void init(HardwareMap hardwareMap) {
         leftDrive = hardwareMap.get(DcMotor.class, "leftDrive");
@@ -37,6 +39,8 @@ public class Robot {
         liftMotor.setDirection(REVERSE);
         glyphClamp = hardwareMap.get(Servo.class, "glyphMotor");
         glyphClamp.setPosition(0.5);
+        glyphClamp2 = hardwareMap.get(Servo.class, "glyphMotor2");
+        glyphClamp2.setPosition(0.5);
         armExtend = hardwareMap.get(DcMotor.class, "armExtend");
         hookerMotor = hardwareMap.get(Servo.class, "hookerMotor");
         hookerMotor.setPosition(0.5);
@@ -47,6 +51,9 @@ public class Robot {
         armLift.setDirection(REVERSE);
         jewelSensor = hardwareMap.get(ColorSensor.class, "jewelSensor");
         jeweler = hardwareMap.get(Servo.class, "jeweler");
+        jeweler.setPosition(0.8);
+        jewelSwivel = hardwareMap.get(Servo.class, "jewelSwivel");
+        jewelSwivel.setPosition(0.2);
 
         arm = new Arm (armExtend, armLift);
         hooker = new Hooker(hookerMotor);
@@ -66,7 +73,7 @@ public class Robot {
     }
 
     void turnToHeading(double heading) throws InterruptedException {
-        final double maxTurnPower = 0.5;
+        final double maxTurnPower = 1.0;
         final double angleForMaxPower = 45;
         leftDrive.setPower(0);
         rightDrive.setPower(0);
