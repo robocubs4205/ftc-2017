@@ -5,14 +5,16 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
 final class Glypher {
-    private final Servo clampServo;
+    private final Servo rightClampServo;
+    private final Servo leftClampServo;
     private final DcMotor liftMotor;
     private final TouchSensor lowerLimitSwitch;
 
     private final double liftPowerScale = 1;
 
-    Glypher (Servo clampServo, DcMotor liftMotor, TouchSensor lowerLimitSwitch) {
-        this.clampServo = clampServo;
+    Glypher (Servo rightClampServo, Servo leftClampServo, DcMotor liftMotor, TouchSensor lowerLimitSwitch) {
+        this.rightClampServo = rightClampServo;
+        this.leftClampServo = leftClampServo;
         this.liftMotor = liftMotor;
         this.lowerLimitSwitch = lowerLimitSwitch;
     }
@@ -32,20 +34,26 @@ final class Glypher {
     }
 
     void open (double speed, double dt) {
-        double currentPosition = clampServo.getPosition();
-        clampServo.setPosition(currentPosition + speed * dt);
+        double currentRightPosition = rightClampServo.getPosition();
+        double currentLeftPosition = rightClampServo.getPosition();
+        rightClampServo.setPosition(currentRightPosition + speed * dt);
+        leftClampServo.setPosition(currentLeftPosition - speed * dt);
     }
 
     void close (double speed, double dt) {
-        double currentPosition = clampServo.getPosition();
-        clampServo.setPosition(currentPosition - speed * dt);
+        open(-speed, dt);
     }
 
     void openFully () {
-        clampServo.setPosition(1);
+        rightClampServo.setPosition(1);
+        leftClampServo.setPosition(-1);
     }
 
     void closeFully () {
-        clampServo.setPosition(-1);
+        rightClampServo.setPosition(-1);
+        leftClampServo.setPosition(1);
+    }
+    void stop(){
+        liftMotor.setPower(0);
     }
 }

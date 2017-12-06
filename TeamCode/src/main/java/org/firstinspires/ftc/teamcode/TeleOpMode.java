@@ -27,7 +27,7 @@ public class TeleOpMode extends OpMode {
             robot.glypher.lower(1);
         }
         else {
-            robot.liftMotor.setPower(0);
+            robot.glypher.stop();
         }
 
         double armExtendPower = gamepad2.right_stick_y;
