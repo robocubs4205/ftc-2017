@@ -20,8 +20,8 @@ public class Robot {
     DcMotor leftDrive;
     DcMotor rightDrive;
     DcMotor liftMotor;
-    Servo glyphClamp;
-    Servo glyphClamp2;
+    private Servo rightGlyphClamp;
+    private Servo leftGlyphClamp;
     private DcMotor armExtend;
     Servo hookerMotor;
     TouchSensor liftLowerLimit;
@@ -37,10 +37,10 @@ public class Robot {
         rightDrive.setDirection(REVERSE);
         liftMotor = hardwareMap.get(DcMotor.class, "liftMotor");
         liftMotor.setDirection(REVERSE);
-        glyphClamp = hardwareMap.get(Servo.class, "glyphMotor");
-        glyphClamp.setPosition(0.5);
-        glyphClamp2 = hardwareMap.get(Servo.class, "glyphMotor2");
-        glyphClamp2.setPosition(0.5);
+        rightGlyphClamp = hardwareMap.get(Servo.class, "glyphMotor");
+        rightGlyphClamp.setPosition(0.5);
+        leftGlyphClamp = hardwareMap.get(Servo.class, "glyphMotor2");
+        leftGlyphClamp.setPosition(0.5);
         armExtend = hardwareMap.get(DcMotor.class, "armExtend");
         hookerMotor = hardwareMap.get(Servo.class, "hookerMotor");
         hookerMotor.setPosition(0.5);
@@ -57,7 +57,7 @@ public class Robot {
 
         arm = new Arm (armExtend, armLift);
         hooker = new Hooker(hookerMotor);
-        glypher = new Glypher(glyphClamp, liftMotor, liftLowerLimit);
+        glypher = new Glypher(rightGlyphClamp, leftGlyphClamp, liftMotor, liftLowerLimit);
         drive = new Drive(leftDrive,rightDrive);
     }
 
@@ -72,23 +72,22 @@ public class Robot {
         return secondsPerFoot * distance / Math.abs(power);
     }
 
+    private static double subtractAngles(double angle1, double angle2){
+        double difference = angle1 - angle2;
+        while(difference>=360)difference-=360;
+        while(difference<=-360)difference+=360;
+        return difference;
+    }
+
     void turnToHeading(double heading) throws InterruptedException {
         final double maxTurnPower = 1.0;
         final double angleForMaxPower = 45;
         leftDrive.setPower(0);
         rightDrive.setPower(0);
-
         double currentAngle = gyro.getHeading();
-        while (heading - currentAngle > 180) {
-            heading -= 360;
-        }
-        while (currentAngle - heading > 180) {
-            heading += 360;
-        }
 
-
-        while (Math.abs(heading - currentAngle) > 5) {
-            double turnPower = clampMagnitude((heading - currentAngle) * maxTurnPower / angleForMaxPower, maxTurnPower);
+        while (Math.abs(subtractAngles(heading,currentAngle)) > 5) {
+            double turnPower = clampMagnitude(subtractAngles(heading,currentAngle) * maxTurnPower / angleForMaxPower, maxTurnPower);
             leftDrive.setPower(turnPower);
             rightDrive.setPower(-turnPower);
             sleep(20L);
