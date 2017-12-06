@@ -35,7 +35,7 @@ final class Glypher {
 
     void open (double speed, double dt) {
         double currentRightPosition = rightClampServo.getPosition();
-        double currentLeftPosition = rightClampServo.getPosition();
+        double currentLeftPosition = leftClampServo.getPosition();
         rightClampServo.setPosition(currentRightPosition + speed * dt);
         leftClampServo.setPosition(currentLeftPosition - speed * dt);
     }
