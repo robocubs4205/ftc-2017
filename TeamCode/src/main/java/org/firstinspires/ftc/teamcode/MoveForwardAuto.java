@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-@Autonomous(name = "Move forward")
+@Autonomous(name = "Move Forward")
 public class MoveForwardAuto extends LinearOpMode {
     @SuppressWarnings("FieldCanBeLocal")
     private final double drivePower = 0.75;
