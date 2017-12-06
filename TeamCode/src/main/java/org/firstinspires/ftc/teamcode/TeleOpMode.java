@@ -26,14 +26,17 @@ public class TeleOpMode extends OpMode {
         else if (gamepad2.a){
             robot.glypher.lower(1);
         }
+        else {
+            robot.liftMotor.setPower(0);
+        }
 
         double armExtendPower = gamepad2.right_stick_y;
         robot.arm.extend(armExtendPower);
 
-        if (gamepad2.y){
+        if (gamepad2.left_bumper){
             robot.glypher.open(1, dt);
         }
-        else if (gamepad2.x){
+        else if (gamepad2.left_trigger > 0.5){
             robot.glypher.close(1, dt);
         }
 
@@ -47,6 +50,10 @@ public class TeleOpMode extends OpMode {
         robot.arm.raise(gamepad2.left_stick_y);
 
         dt = ((double) (System.nanoTime() - startTime)) / 1000000000;
+
+        telemetry.addData("Color",  "Red = %d Blue = %d", robot.jewelSensor.red(), robot.jewelSensor.blue());
+        telemetry.addData("Gyro",  "Heading = %d", robot.gyro.getHeading());
+
     }
 
 
