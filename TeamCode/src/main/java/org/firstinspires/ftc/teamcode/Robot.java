@@ -19,46 +19,36 @@ public class Robot {
 
     DcMotor leftDrive;
     DcMotor rightDrive;
-    DcMotor liftMotor;
-    private Servo rightGlyphClamp;
-    private Servo leftGlyphClamp;
-    private DcMotor armExtend;
-    Servo hookerMotor;
-    TouchSensor liftLowerLimit;
     GyroSensor gyro;
-    private DcMotor armLift;
     ColorSensor jewelSensor;
-    Servo jewelVertical;
-    Servo jewelSwivel;
     Jeweler jeweler;
 
     void init(HardwareMap hardwareMap) {
         leftDrive = hardwareMap.get(DcMotor.class, "leftDrive");
         rightDrive = hardwareMap.get(DcMotor.class, "rightDrive");
         rightDrive.setDirection(REVERSE);
-        liftMotor = hardwareMap.get(DcMotor.class, "liftMotor");
+        DcMotor liftMotor = hardwareMap.get(DcMotor.class, "liftMotor");
         liftMotor.setDirection(REVERSE);
-        rightGlyphClamp = hardwareMap.get(Servo.class, "glyphMotor");
-        leftGlyphClamp = hardwareMap.get(Servo.class, "glyphMotor2");
-        armExtend = hardwareMap.get(DcMotor.class, "armExtend");
-        hookerMotor = hardwareMap.get(Servo.class, "hookerMotor");
+        Servo hookerMotor = hardwareMap.get(Servo.class, "hookerMotor");
         hookerMotor.setPosition(0.5);
-        hookerMotor.scaleRange(.5,1);
-        liftLowerLimit = hardwareMap.get(TouchSensor.class, "liftLowerLimit");
+        hookerMotor.scaleRange(.5, 1);
         gyro = hardwareMap.get(GyroSensor.class, "gyro");
-        armLift = hardwareMap.get(DcMotor.class, "armLift");
+        DcMotor armLift = hardwareMap.get(DcMotor.class, "armLift");
         armLift.setDirection(REVERSE);
         jewelSensor = hardwareMap.get(ColorSensor.class, "jewelSensor");
-        jewelVertical = hardwareMap.get(Servo.class, "jewelVertical");
+        Servo jewelVertical = hardwareMap.get(Servo.class, "jewelVertical");
         jewelVertical.setPosition(0.8);
-        jewelSwivel = hardwareMap.get(Servo.class, "jewelSwivel");
+        Servo jewelSwivel = hardwareMap.get(Servo.class, "jewelSwivel");
         jewelSwivel.setPosition(0.2);
 
-        arm = new Arm (armExtend, armLift);
+        arm = new Arm(hardwareMap.get(DcMotor.class, "armExtend"), armLift);
         hooker = new Hooker(hookerMotor);
-        glypher = new Glypher(rightGlyphClamp, leftGlyphClamp, liftMotor, liftLowerLimit);
+        glypher = new Glypher(hardwareMap.get(Servo.class, "glyphMotor"),
+                hardwareMap.get(Servo.class, "glyphMotor2"),
+                liftMotor,
+                hardwareMap.get(TouchSensor.class, "liftLowerLimit"));
         glypher.closeFully();
-        drive = new Drive(leftDrive,rightDrive);
+        drive = new Drive(leftDrive, rightDrive);
         jeweler = new Jeweler(jewelVertical, jewelSwivel, jewelSensor);
         //Temporary
         //jewelSwivel.setPosition(0);
@@ -76,10 +66,10 @@ public class Robot {
         return secondsPerFoot * distance / Math.abs(power);
     }
 
-    private static double subtractAngles(double angle1, double angle2){
+    private static double subtractAngles(double angle1, double angle2) {
         double difference = angle1 - angle2;
-        while(difference>=360)difference-=360;
-        while(difference<=-360)difference+=360;
+        while (difference >= 360) difference -= 360;
+        while (difference <= -360) difference += 360;
         return difference;
     }
 
@@ -90,8 +80,8 @@ public class Robot {
         rightDrive.setPower(0);
         double currentAngle = gyro.getHeading();
 
-        while (Math.abs(subtractAngles(heading,currentAngle)) > 5) {
-            double turnPower = clampMagnitude(subtractAngles(heading,currentAngle) * maxTurnPower / angleForMaxPower, maxTurnPower);
+        while (Math.abs(subtractAngles(heading, currentAngle)) > 5) {
+            double turnPower = clampMagnitude(subtractAngles(heading, currentAngle) * maxTurnPower / angleForMaxPower, maxTurnPower);
             leftDrive.setPower(turnPower);
             rightDrive.setPower(-turnPower);
             sleep(20L);
