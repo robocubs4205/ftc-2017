@@ -28,8 +28,9 @@ public class Robot {
     GyroSensor gyro;
     private DcMotor armLift;
     ColorSensor jewelSensor;
-    Servo jeweler;
+    Servo jewelVertical;
     Servo jewelSwivel;
+    Jeweler jeweler;
 
     void init(HardwareMap hardwareMap) {
         leftDrive = hardwareMap.get(DcMotor.class, "leftDrive");
@@ -38,9 +39,7 @@ public class Robot {
         liftMotor = hardwareMap.get(DcMotor.class, "liftMotor");
         liftMotor.setDirection(REVERSE);
         rightGlyphClamp = hardwareMap.get(Servo.class, "glyphMotor");
-        rightGlyphClamp.setPosition(0.5);
         leftGlyphClamp = hardwareMap.get(Servo.class, "glyphMotor2");
-        leftGlyphClamp.setPosition(0.5);
         armExtend = hardwareMap.get(DcMotor.class, "armExtend");
         hookerMotor = hardwareMap.get(Servo.class, "hookerMotor");
         hookerMotor.setPosition(0.5);
@@ -50,15 +49,20 @@ public class Robot {
         armLift = hardwareMap.get(DcMotor.class, "armLift");
         armLift.setDirection(REVERSE);
         jewelSensor = hardwareMap.get(ColorSensor.class, "jewelSensor");
-        jeweler = hardwareMap.get(Servo.class, "jeweler");
-        jeweler.setPosition(0.8);
+        jewelVertical = hardwareMap.get(Servo.class, "jewelVertical");
+        jewelVertical.setPosition(0.8);
         jewelSwivel = hardwareMap.get(Servo.class, "jewelSwivel");
         jewelSwivel.setPosition(0.2);
 
         arm = new Arm (armExtend, armLift);
         hooker = new Hooker(hookerMotor);
         glypher = new Glypher(rightGlyphClamp, leftGlyphClamp, liftMotor, liftLowerLimit);
+        glypher.closeFully();
         drive = new Drive(leftDrive,rightDrive);
+        jeweler = new Jeweler(jewelVertical, jewelSwivel, jewelSensor);
+        //Temporary
+        //jewelSwivel.setPosition(0);
+        //jewelVertical.setPosition(0);
     }
 
     //Distance is in feet, returns time in seconds

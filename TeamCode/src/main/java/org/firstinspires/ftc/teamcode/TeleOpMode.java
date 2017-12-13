@@ -53,7 +53,7 @@ public class TeleOpMode extends OpMode {
 
         telemetry.addData("Color",  "Red = %d Blue = %d", robot.jewelSensor.red(), robot.jewelSensor.blue());
         telemetry.addData("Gyro",  "Heading = %d", robot.gyro.getHeading());
-
+        telemetry.addData("Brightness", "Brightness = %d", robot.jewelSensor.alpha());
     }
 
 
