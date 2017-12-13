@@ -4,9 +4,12 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 @Autonomous(name = "RedStoneLeft")
-public class RedStoneLeftAuto extends AudienceStoneAuto {
+public class RedStoneLeftAuto extends LinearOpMode {
 
-    RedStoneLeftAuto() {
-        super(true);
+    AudienceStoneAuto inner = new AudienceStoneAuto(true, this);
+
+    @Override
+    public void runOpMode() throws InterruptedException {
+        inner.runOpMode();
     }
 }

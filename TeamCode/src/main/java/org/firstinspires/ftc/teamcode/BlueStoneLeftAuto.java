@@ -4,9 +4,11 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 @Autonomous(name = "BlueStoneLeft")
-public class BlueStoneLeftAuto extends TimerStoneAuto {
+public class BlueStoneLeftAuto extends LinearOpMode {
+    private final TimerStoneAuto inner = new TimerStoneAuto(false, this);
 
-    BlueStoneLeftAuto() {
-        super(false);
+    @Override
+    public void runOpMode() throws InterruptedException {
+        inner.runOpMode();
     }
 }

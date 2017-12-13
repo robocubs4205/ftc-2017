@@ -2,46 +2,34 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-class AudienceStoneAuto extends LinearOpMode {
+class AudienceStoneAuto {
+
+    private final LinearOpMode outer;
 
     private final double drivePower = 0.75;
     private final boolean isRedTeam;
     private Robot robot = new Robot();
 
-    AudienceStoneAuto (boolean isRedTeam) {
-
+    AudienceStoneAuto(boolean isRedTeam, LinearOpMode outer) {
+        this.outer = outer;
         this.isRedTeam = isRedTeam;
     }
 
-    @Override
     public void runOpMode() throws InterruptedException {
-        robot.init(hardwareMap);
+        robot.init(outer.hardwareMap);
         robot.gyro.calibrate();
-        waitForStart();
+        outer.waitForStart();
 //  Jewel Knocker
-        robot.jewelSwivel.setPosition(0.8);
-        sleep(1300L);
-        robot.jeweler.setPosition(0.1);
-        sleep(1500L);
-        if (robot.jewelSensor.red() > 10){
-            robot.jewelSwivel.setPosition(0.6);
-        } else {
-            robot.jewelSwivel.setPosition(0.95);
-        }
-        sleep(300L);
-        robot.jeweler.setPosition(0.8);
-        sleep(1300L);
-        robot.jewelSwivel.setPosition(0.3);
-        sleep(1300L);
+        robot.jeweler.whackJewel(isRedTeam);
 
-//        robot.turnToHeading(20);
+//      robot.turnToHeading(20);
         robot.leftDrive.setPower(-drivePower);
         robot.rightDrive.setPower(-drivePower);
-        sleep((long) (Robot.timeForDistance(2, -drivePower) * 1000));
+        outer.sleep((long) (Robot.timeForDistance(2, -drivePower) * 1000));
         robot.turnToHeading(isRedTeam?90:-90);
         robot.leftDrive.setPower(-drivePower);
         robot.rightDrive.setPower(-drivePower);
-        sleep((long) (Robot.timeForDistance(2.5, -drivePower) * 1000));
+        outer.sleep((long) (Robot.timeForDistance(2.5, -drivePower) * 1000));
 /*
         robot.leftDrive.setPower(drivePower);
         robot.rightDrive.setPower(drivePower);
